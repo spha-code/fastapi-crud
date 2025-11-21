@@ -18,17 +18,18 @@ A complete, production-ready CRUD application built with FastAPI, SQLAlchemy, SQ
 - Comprehensive error handling
 
 ## 📁 Final Project Structure
-fastapi-crud/
-├── pyproject.toml
-├── main.py
-├── database.py
-├── models.py
-├── schemas.py
-├── crud.py
-└── static/
-    ├── index.html
-    ├── style.css
-    └── app.js
+    
+    fastapi-crud/
+    ├── pyproject.toml
+    ├── main.py
+    ├── database.py
+    ├── models.py
+    ├── schemas.py
+    ├── crud.py
+    └── static/
+        ├── index.html
+        ├── style.css
+        └── app.js
 
 ## 🚀 Getting Started
 ### Prerequisites
