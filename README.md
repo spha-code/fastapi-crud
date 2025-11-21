@@ -62,78 +62,82 @@ uv add fastapi uvicorn sqlalchemy
 # 💾 Create the Application Files
 
 ## 1. database.py
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./items.db"
+        from sqlalchemy import create_engine
+        from sqlalchemy.ext.declarative import declarative_base
+        from sqlalchemy.orm import sessionmaker
+        
+        SQLALCHEMY_DATABASE_URL = "sqlite:///./items.db"
+        
+        engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+        SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-Base = declarative_base()
+        Base = declarative_base()
 
 ## 2. models.py
-from sqlalchemy import Column, Integer, String, Boolean
-from database import Base
 
-class Item(Base):
-    __tablename__ = "items"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
-    description = Column(String)
-    completed = Column(Boolean, default=False)
+        from sqlalchemy import Column, Integer, String, Boolean
+        from database import Base
+        
+        class Item(Base):
+            __tablename__ = "items"
+        
+            id = Column(Integer, primary_key=True, index=True)
+            name = Column(String, index=True)
+            description = Column(String)
+            completed = Column(Boolean, default=False)
 
 ## 3. schemas.py
-from pydantic import BaseModel
-
-class ItemBase(BaseModel):
-    name: str
-    description: str | None = None
-    completed: bool = False
-
-class ItemCreate(ItemBase):
-    pass
-
-class Item(ItemBase):
-    id: int
-    class Config:
-        from_attributes = True
-
+            
+            from pydantic import BaseModel
+            
+            class ItemBase(BaseModel):
+                name: str
+                description: str | None = None
+                completed: bool = False
+            
+            class ItemCreate(ItemBase):
+                pass
+            
+            class Item(ItemBase):
+                id: int
+                class Config:
+                    from_attributes = True
+            
 ## 4. crud.py
-from sqlalchemy.orm import Session
-from models import Item as ItemModel
-from schemas import ItemCreate
 
-def get_items(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(ItemModel).offset(skip).limit(limit).all()
-
-def get_item(db: Session, item_id: int):
-    return db.query(ItemModel).filter(ItemModel.id == item_id).first()
-
-def create_item(db: Session, item: ItemCreate):
-    db_item = ItemModel(**item.model_dump())
-    db.add(db_item)
-    db.commit()
-    db.refresh(db_item)
-    return db_item
-
-def update_item(db: Session, item_id: int, item_data: dict):
-    db_item = db.query(ItemModel).filter(ItemModel.id == item_id).first()
-    if db_item:
-        for key, value in item_data.items():
-            setattr(db_item, key, value)
-        db.commit()
-        db.refresh(db_item)
-    return db_item
-
-def delete_item(db: Session, item_id: int):
-    db_item = db.query(ItemModel).filter(ItemModel.id == item_id).first()
-    if db_item:
-        db.delete(db_item)
-        db.commit()
-    return db_item
+            from sqlalchemy.orm import Session
+            from models import Item as ItemModel
+            from schemas import ItemCreate
+            
+            def get_items(db: Session, skip: int = 0, limit: int = 100):
+                return db.query(ItemModel).offset(skip).limit(limit).all()
+            
+            def get_item(db: Session, item_id: int):
+                return db.query(ItemModel).filter(ItemModel.id == item_id).first()
+            
+            def create_item(db: Session, item: ItemCreate):
+                db_item = ItemModel(**item.model_dump())
+                db.add(db_item)
+                db.commit()
+                db.refresh(db_item)
+                return db_item
+            
+            def update_item(db: Session, item_id: int, item_data: dict):
+                db_item = db.query(ItemModel).filter(ItemModel.id == item_id).first()
+                if db_item:
+                    for key, value in item_data.items():
+                        setattr(db_item, key, value)
+                    db.commit()
+                    db.refresh(db_item)
+                return db_item
+            
+            def delete_item(db: Session, item_id: int):
+                db_item = db.query(ItemModel).filter(ItemModel.id == item_id).first()
+                if db_item:
+                    db.delete(db_item)
+                    db.commit()
+                return db_item
 
 ## 5. main.py
 from fastapi import FastAPI, Depends, HTTPException
