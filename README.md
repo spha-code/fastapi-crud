@@ -1,10 +1,3 @@
-
-
-touch main.py database.py models.py schemas.py crud.py
-mkdir static
-touch static/index.html static/app.js
-
-
 # FastAPI CRUD Application with Plain JavaScript
 A complete, production-ready CRUD application built with FastAPI, SQLAlchemy, SQLite, and vanilla JavaScript. No JavaScript frameworks or complex templating—just clean, simple code that's easy to understand and modify.
 
@@ -44,18 +37,23 @@ fastapi-crud/
 
 ### Step 1: Install UV Package Manager
 macOS / Linux:
-curl -LsSf https://astral.sh/uv/install.sh | sh
+    curl -LsSf https://astral.sh/uv/install.sh | sh
 
 Windows:
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 
 ### Step 2: Create Project Directory & Initialize
-mkdir fastapi-crud
-cd fastapi-crud
-uv init
+
+    mkdir fastapi-crud
+    cd fastapi-crud
+    uv init
+    
+    touch main.py database.py models.py schemas.py crud.py
+    mkdir static
+    touch static/index.html static/style.css static/app.js
 
 ### Step 3: Install Dependencies
-uv add fastapi uvicorn sqlalchemy
+    uv add fastapi uvicorn sqlalchemy
 
 ---
 
