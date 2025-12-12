@@ -1,5 +1,5 @@
-# FastAPI CRUD Application with Plain JavaScript
-A complete, production-ready CRUD application built with FastAPI, SQLAlchemy, SQLite, and vanilla JavaScript.
+# FastAPI CRUD Application & vanilla JavaScript
+A complete, production-ready CRUD application built with FastAPI, SQLAlchemy, SQLite, & vanilla JavaScript.
 
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115.0-009688?style=flat&logo=fastapi)
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat&logo=python)
