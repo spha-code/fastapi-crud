@@ -10,12 +10,10 @@ A complete, production-ready CRUD application built with FastAPI, SQLAlchemy, SQ
 - Full CRUD operations (Create, Read, Update, Delete)
 - RESTful API built with FastAPI
 - SQLite database with SQLAlchemy ORM
-- Vanilla JavaScript frontend (no frameworks!)
-- Modern async/await JavaScript
-- Responsive design with pure CSS
-- Simple project structure
-- Hot-reload development server
-- Comprehensive error handling
+- Vanilla JavaScript frontend
+- async/await JavaScript
+- CSS
+- error handling
 
 ## 📁 Final Project Structure
     
